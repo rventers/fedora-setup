@@ -22,9 +22,9 @@ OPTIONS=(1 "Enable RPM Fusion - Enables the RPM Fusion repos for your specific v
          5 "Install Software - Installs a bunch of my most used software"
          6 "Install Oh-My-ZSH"
          7 "Install Powerlevel10k Prompt - INSTALL AFTER Oh-My-Zsh ONLY"
-         8 "Install Extras - Themes Fonts and Codecs"
+         8 "Install Extras - Codecs"
          9 "Install Nvidia - Install akmod nvidia drivers"
-	 10 "Quit")
+	    10 "Quit")
 
 while [ "$CHOICE -ne 4" ]; do
     CHOICE=$(dialog --clear \
@@ -40,7 +40,7 @@ while [ "$CHOICE -ne 4" ]; do
     case $CHOICE in
         1)  echo "Enabling RPM Fusion"
             sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-	    sudo dnf upgrade -y --refresh
+	        sudo dnf upgrade -y --refresh
             sudo dnf groupupdate -y core
             sudo dnf install -y rpmfusion-free-release-tainted
             sudo dnf install -y dnf-plugins-core
@@ -73,15 +73,15 @@ while [ "$CHOICE -ne 4" ]; do
             notify-send "Oh-My-Zsh is ready to rock n roll" --expire-time=10
             ;;
         7)  echo "Installing Powerlevel10k Prompt"
-	    HOME_FONT_DIR=~/.local/share/fonts/meslolgs_nf
-	    P10K_FONT_DIR=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k-media
-	    P10K_FONT_FILES=('MesloLGS NF Bold Italic.ttf' 'MesloLGS NF Italic.ttf' 'MesloLGS NF Bold.ttf' 'MesloLGS NF Regular.ttf')
+	        USER_FONTS_DIR="$HOME/.local/share/fonts/meslolgs"
+	        P10K_FONT_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k-media"
+	        P10K_FONT_FILES=('MesloLGS NF Bold Italic.ttf' 'MesloLGS NF Italic.ttf' 'MesloLGS NF Bold.ttf' 'MesloLGS NF Regular.ttf')
             git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-	    git clone --depth=1 https://github.com/romkatv/powerlevel10k-media.git $P10K_FONT_DIR
+	        git clone --depth=1 https://github.com/romkatv/powerlevel10k-media.git $P10K_FONT_DIR
             sed -i -e 's@^ZSH_THEME=.*@ZSH_THEME="powerlevel10k/powerlevel10k"@g' ~/.zshrc
-	    mkdir -p $HOME_FONT_DIR
-	    for F in ${P10K_FONT_FILES[@]}; do cp $P10K_FONT_DIR/$F $HOME_FONT_DIR/$F; done
-	    fc-cache -v
+	        mkdir -p $USER_FONTS_DIR
+	        for F in ${P10K_FONT_FILES[@]}; do cp "$P10K_FONT_DIR/$F" "$USER_FONTS_DIR/$F"; done
+	        fc-cache -v
             notify-send "Powerlevel10k Prompt Activated" --expire-time=10
             ;;
         8)  echo "Installing Extras"
@@ -95,7 +95,7 @@ while [ "$CHOICE -ne 4" ]; do
         9)  echo "Installing Nvidia Driver Akmod-Nvidia"
             sudo dnf install -y akmod-nvidia
             notify-send "All done" --expire-time=10
-	    ;;
+	        ;;
         10) exit 0
             ;;
     esac
