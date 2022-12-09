@@ -75,9 +75,9 @@ while [ "$CHOICE -ne 4" ]; do
             chsh -s "$(which zsh)"
             notify-send "Oh-My-Zsh is ready to rock n roll" --expire-time=10
             ;;
-        7)  echo "Installing Starship Prompt"
-            curl -sS https://starship.rs/install.sh | sh
-            echo "eval "$(starship init zsh)"" >> ~/.zshrc
+        7)  echo "Installing Powerlevel10k Prompt"
+            git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+            sed -i 's/ZSH_THEME=.*/ZSH_THEME="powerlevel10k/powerlevel10k"/g' ~/.zshrc
             notify-send "Starship Prompt Activated" --expire-time=10
             ;;
         8)  echo "Installing Extras"
