@@ -69,10 +69,7 @@ while [ "$CHOICE -ne 4" ]; do
             notify-send "Software has been installed" --expire-time=10
             ;;
         6)  echo "Installing Oh-My-Zsh"
-            sudo dnf -y install zsh util-linux-user
-            sh -c "$(curl -fsSL $OH_MY_ZSH_URL)"
-            echo "change shell to ZSH"
-            chsh -s "$(which zsh)"
+            sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
             notify-send "Oh-My-Zsh is ready to rock n roll" --expire-time=10
             ;;
         7)  echo "Installing Powerlevel10k Prompt"
