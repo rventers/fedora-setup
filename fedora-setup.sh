@@ -75,6 +75,7 @@ while [ "$CHOICE -ne 4" ]; do
         7)  echo "Installing Powerlevel10k Prompt"
             git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
             sed -i -e 's@^ZSH_THEME=.*@ZSH_THEME="powerlevel10k/powerlevel10k"@g' ~/.zshrc
+	    firefox https://github.com/romkatv/powerlevel10k\#meslo-nerd-font-patched-for-powerlevel10k > /dev/null 2>&1 &
             notify-send "Powerlevel10k Prompt Activated" --expire-time=10
             ;;
         8)  echo "Installing Extras"
