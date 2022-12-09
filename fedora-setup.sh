@@ -73,9 +73,15 @@ while [ "$CHOICE -ne 4" ]; do
             notify-send "Oh-My-Zsh is ready to rock n roll" --expire-time=10
             ;;
         7)  echo "Installing Powerlevel10k Prompt"
+	    HOME_FONT_DIR=~/.local/share/fonts/meslolgs_nf
+	    P10K_FONT_DIR=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k-media
+	    P10K_FONT_FILES=('MesloLGS NF Bold Italic.ttf' 'MesloLGS NF Italic.ttf' 'MesloLGS NF Bold.ttf' 'MesloLGS NF Regular.ttf')
             git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+	    git clone --depth=1 https://github.com/romkatv/powerlevel10k-media.git $P10K_FONT_DIR
             sed -i -e 's@^ZSH_THEME=.*@ZSH_THEME="powerlevel10k/powerlevel10k"@g' ~/.zshrc
-	    firefox https://github.com/romkatv/powerlevel10k\#meslo-nerd-font-patched-for-powerlevel10k > /dev/null 2>&1 &
+	    mkdir -p $HOME_FONT_DIR
+	    for F in ${P10K_FONT_FILES[@]}; do cp $P10K_FONT_DIR/$F $HOME_FONT_DIR/$F; done
+	    fc-cache -v
             notify-send "Powerlevel10k Prompt Activated" --expire-time=10
             ;;
         8)  echo "Installing Extras"
