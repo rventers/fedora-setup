@@ -15,76 +15,58 @@ if [ $(rpm -q dialog 2>/dev/null | grep -c "is not installed") -eq 1 ]; then
 sudo dnf install -y dialog
 fi
 
-OPTIONS=(1 "Enable RPM Fusion - Enables the RPM Fusion repos for your specific version"
-         2 "Update Firmware - If your system supports fw update delivery"
-         3 "Speed up DNF - This enables fastestmirror, max downloads and deltarpms"
-         4 "Enable Flatpak - Enables the Flatpak repo and installs packages"
-         5 "Install Software - Installs a bunch of my most used software"
-         6 "Install Oh-My-ZSH"
-         7 "Install Powerlevel10k Prompt - INSTALL AFTER Oh-My-Zsh ONLY"
-         8 "Install Extras - Codecs"
-         9 "Install Nvidia - Install akmod nvidia drivers"
-	    10 "Quit")
+OPTIONS=(
+    1 "Enable RPM Fusion - Enables the RPM Fusion repos for your specific version"
+    2 "Speed up DNF - This enables fastestmirror, max downloads and deltarpms"
+    3 "Install Software - Installs a bunch of my most used software"
+    4 "Install Flathub - Enables the Flathub Flatpak repo and installs packages"
+    5 "Install Oh-My-ZSH"
+    6 "Install Extras - Sound and Video Codecs"
+    7 "Quit"
+)
 
 while [ "$CHOICE -ne 4" ]; do
     CHOICE=$(dialog --clear \
-                --backtitle "$BACKTITLE" \
-                --title "$TITLE" \
-                --nocancel \
-                --menu "$MENU" \
-                $HEIGHT $WIDTH $CHOICE_HEIGHT \
-                "${OPTIONS[@]}" \
-                2>&1 >/dev/tty)
+        --backtitle "$BACKTITLE" \
+        --title "$TITLE" \
+        --nocancel \
+        --menu "$MENU" \
+        $HEIGHT $WIDTH $CHOICE_HEIGHT \
+        "${OPTIONS[@]}" \
+        2>&1 >/dev/tty)
 
     clear
     case $CHOICE in
         1)  echo "Enabling RPM Fusion"
             sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-	        sudo dnf upgrade -y --refresh
+            sudo dnf upgrade -y --refresh
             sudo dnf groupupdate -y core
-            sudo dnf install -y rpmfusion-free-release-tainted
-            sudo dnf install -y dnf-plugins-core
             notify-send "RPM Fusion Enabled" --expire-time=10
             ;;
-        2)  echo "Updating Firmware"
-            sudo fwupdmgr get-devices 
-            sudo fwupdmgr refresh --force 
-            sudo fwupdmgr get-updates 
-            sudo fwupdmgr update
-            ;;
-        3)  echo "Speeding Up DNF"
+        2)  echo "Speeding Up DNF"
             echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
             echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
             echo 'deltarpm=true' | sudo tee -a /etc/dnf/dnf.conf
             notify-send "Your DNF config has now been amended" --expire-time=10
             ;;
-        4)  echo "Enabling Flatpak"
+        3)  echo "Installing Software"
+            sudo dnf install -y $(cat dnf-packages.txt)
+            notify-send "Software has been installed" --expire-time=10
+            ;;
+        4)  echo "Installing Flathub"
             flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
             flatpak update
             source 'flatpak-install.sh'
             notify-send "Flatpak has now been enabled" --expire-time=10
             ;;
-        5)  echo "Installing Software"
-            sudo dnf install -y $(cat dnf-packages.txt)
-            notify-send "Software has been installed" --expire-time=10
-            ;;
-        6)  echo "Installing Oh-My-Zsh"
-            sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+        5)  echo "Installing Oh-My-Zsh"
+            sudo dnf -y install zsh util-linux-user
+            sh -c "$(curl -fsSL $OH_MY_ZSH_URL)"
+            echo "change shell to ZSH"
+            chsh -s "$(which zsh)"
             notify-send "Oh-My-Zsh is ready to rock n roll" --expire-time=10
             ;;
-        7)  echo "Installing Powerlevel10k Prompt"
-	        USER_FONTS_DIR="$HOME/.local/share/fonts/meslolgs"
-	        P10K_FONT_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k-media"
-	        P10K_FONT_FILES=('MesloLGS NF Bold Italic.ttf' 'MesloLGS NF Italic.ttf' 'MesloLGS NF Bold.ttf' 'MesloLGS NF Regular.ttf')
-            git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-	        git clone --depth=1 https://github.com/romkatv/powerlevel10k-media.git $P10K_FONT_DIR
-            sed -i -e 's@^ZSH_THEME=.*@ZSH_THEME="powerlevel10k/powerlevel10k"@g' ~/.zshrc
-	        mkdir -p $USER_FONTS_DIR
-	        for F in ${P10K_FONT_FILES[@]}; do cp "$P10K_FONT_DIR/$F" "$USER_FONTS_DIR/$F"; done
-	        fc-cache -v
-            notify-send "Powerlevel10k Prompt Activated" --expire-time=10
-            ;;
-        8)  echo "Installing Extras"
+        6)  echo "Installing Extras"
             sudo dnf groupupdate -y sound-and-video
             sudo dnf install -y libdvdcss
             sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,ugly-\*,base} gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel ffmpeg gstreamer-ffmpeg
@@ -92,11 +74,7 @@ while [ "$CHOICE -ne 4" ]; do
             sudo dnf group upgrade -y --with-optional Multimedia
             notify-send "All done" --expire-time=10
             ;;
-        9)  echo "Installing Nvidia Driver Akmod-Nvidia"
-            sudo dnf install -y akmod-nvidia
-            notify-send "All done" --expire-time=10
-	        ;;
-        10) exit 0
+        7)  exit 0
             ;;
     esac
 done
