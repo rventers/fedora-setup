@@ -1,6 +1,7 @@
 deja-dup
 gnome-tweaks
 lutris
+python3-requests-oauthlib
 steam
 wine
 winetricks
