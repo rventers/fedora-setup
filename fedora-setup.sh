@@ -9,6 +9,7 @@ MENU="Please Choose one of the following options:"
 
 #Other variables
 OH_MY_ZSH_URL="https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+P10K_URL="https://github.com/romkatv/powerlevel10k.git"
 
 #Check to see if Dialog is installed, if not install it - Thanks Kinkz_nl
 if [ $(rpm -q dialog 2>/dev/null | grep -c "is not installed") -eq 1 ]; then
@@ -21,8 +22,9 @@ OPTIONS=(
     3 "Install Software - Installs a bunch of my most used software"
     4 "Install Flathub - Enables the Flathub Flatpak repo and installs packages"
     5 "Install Oh-My-ZSH"
-    6 "Install Extras - Sound and Video Codecs"
-    7 "Quit"
+    6 "Install powerlevel10k (requires ZSH)"
+    7 "Install Extras - Sound and Video Codecs"
+    8 "Quit"
 )
 
 while [ "$CHOICE -ne 4" ]; do
@@ -66,7 +68,12 @@ while [ "$CHOICE -ne 4" ]; do
             chsh -s "$(which zsh)"
             notify-send "Oh-My-Zsh is ready to rock n roll" --expire-time=10
             ;;
-        6)  echo "Installing Extras"
+        6)  echo "Installing powerlevel10k"
+            git clone --depth=1 $P10K_URL ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+            sed -i 's@^ZSH_THEME=.*@ZSH_THEME="powerlevel10k/powerlevel10k"@g' ~/.zshrc
+            notify-send "powerlevel10k has now been installed" --expire-time=10
+            ;;
+        7)  echo "Installing Extras"
             sudo dnf groupupdate -y sound-and-video
             sudo dnf install -y libdvdcss
             sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,ugly-\*,base} gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel ffmpeg gstreamer-ffmpeg
@@ -74,7 +81,7 @@ while [ "$CHOICE -ne 4" ]; do
             sudo dnf group upgrade -y --with-optional Multimedia
             notify-send "All done" --expire-time=10
             ;;
-        7)  exit 0
+        8)  exit 0
             ;;
     esac
 done
