@@ -6,5 +6,6 @@ com.usebottles.bottles
 com.vscodium.codium
 de.haeckerfelix.Fragments
 io.openrct2.OpenRCT2
+org.gimp.GIMP
 org.onlyoffice.desktopeditors
 org.signal.Signal
