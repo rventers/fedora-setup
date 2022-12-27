@@ -1,3 +1,4 @@
+bottles
 deja-dup
 gnome-tweaks
 lutris
