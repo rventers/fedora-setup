@@ -2,7 +2,6 @@ com.atlauncher.ATLauncher
 com.discordapp.Discord
 com.github.tchx84.Flatseal
 com.mattjakeman.ExtensionManager
-com.usebottles.bottles
 com.vscodium.codium
 de.haeckerfelix.Fragments
 io.openrct2.OpenRCT2
