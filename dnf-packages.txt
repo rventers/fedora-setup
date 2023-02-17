@@ -2,6 +2,7 @@ bottles
 deja-dup
 gnome-tweaks
 lutris
+python3-certifi
 python3-requests-oauthlib
 steam
 wine
