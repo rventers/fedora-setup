@@ -62,5 +62,5 @@ Dialog must be installed for the menu system to work and as such the script will
 ### Install Oh-My-ZSH
   - **Installs Oh-My-Zsh** - [A ZSH configuration management framework](https://ohmyz.sh/)
 
-### Install Starship Prompt
-  - **Installs the Starship prompt for ZSH** - [A popular cross-shell highly customisable prompt](https://starship.rs/)
+### Install powerlevel10k Prompt
+  - **Installs the powerlevel10k prompt for ZSH** - [A popular cross-shell highly customisable prompt](https://github.com/romkatv/powerlevel10k)
