@@ -3,6 +3,7 @@ deja-dup
 discord
 fragments
 gimp
+gnome-extensions-app
 gnome-tweaks
 lutris
 python3-certifi
