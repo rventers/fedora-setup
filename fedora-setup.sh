@@ -56,7 +56,7 @@ while [ "$CHOICE -ne 4" ]; do
             notify-send "Software has been installed" --expire-time=10
             ;;
         4)  echo "Installing Extras"
-            sudo dnf install -u gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel
+            sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel
             sudo dnf install -y lame\* --exclude=lame-devel
             sudo dnf group upgrade -y --with-optional Multimedia
             notify-send "All done" --expire-time=10
