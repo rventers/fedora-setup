@@ -20,7 +20,7 @@ OPTIONS=(
     1 "Speed up DNF - This enables fastestmirror, max downloads and deltarpms"
     2 "Enable RPM Fusion - Enables the RPM Fusion repos for your specific version"
     3 "Install Software - Installs a bunch of my most used software"
-    4 "Install Extras - Sound and Video Codecs"
+    4 "Install Extras - Sound and Video Codecs (requires RPM Fusion)"
     5 "Install Flathub - Enables the Flathub Flatpak repo and installs packages"
     6 "Install Oh-My-ZSH"
     7 "Install powerlevel10k (requires ZSH)"
@@ -56,9 +56,7 @@ while [ "$CHOICE -ne 4" ]; do
             notify-send "Software has been installed" --expire-time=10
             ;;
         4)  echo "Installing Extras"
-            sudo dnf groupupdate -y sound-and-video
-            sudo dnf install -y libdvdcss
-            sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,ugly-\*,base} gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel ffmpeg gstreamer-ffmpeg
+            sudo dnf install -u gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel
             sudo dnf install -y lame\* --exclude=lame-devel
             sudo dnf group upgrade -y --with-optional Multimedia
             notify-send "All done" --expire-time=10
