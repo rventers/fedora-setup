@@ -3,7 +3,5 @@ com.discordapp.Discord
 com.github.tchx84.Flatseal
 com.mattjakeman.ExtensionManager
 com.vscodium.codium
-de.haeckerfelix.Fragments
 io.openrct2.OpenRCT2
-org.gimp.GIMP
 org.signal.Signal

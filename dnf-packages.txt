@@ -1,5 +1,7 @@
 bottles
 deja-dup
+fragments
+gimp
 gnome-tweaks
 lutris
 python3-certifi
