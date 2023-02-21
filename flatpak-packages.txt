@@ -1,5 +1,4 @@
 com.atlauncher.ATLauncher
-com.discordapp.Discord
 com.github.tchx84.Flatseal
 com.mattjakeman.ExtensionManager
 com.vscodium.codium
