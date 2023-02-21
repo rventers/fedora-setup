@@ -58,7 +58,7 @@ while [ "$CHOICE -ne 4" ]; do
         4)  echo "Installing Flathub"
             flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
             flatpak update
-            source 'flatpak-install.sh'
+            flatpak install -y $(cat flatpak-packages.txt)
             notify-send "Flatpak has now been enabled" --expire-time=10
             ;;
         5)  echo "Installing Oh-My-Zsh"
