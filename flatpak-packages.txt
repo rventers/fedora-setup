@@ -1,5 +1,6 @@
 com.atlauncher.ATLauncher
 com.github.tchx84.Flatseal
+com.mattjakeman.ExtensionManager
 com.vscodium.codium
 io.openrct2.OpenRCT2
 org.signal.Signal
