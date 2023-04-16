@@ -1,6 +1,5 @@
 bottles
 deja-dup
-discord
 fragments
 gimp
 gnome-tweaks
