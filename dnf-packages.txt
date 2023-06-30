@@ -1,11 +1,8 @@
-bottles
 deja-dup
 fragments
 gimp
 gnome-tweaks
 lutris
-python3-certifi
-python3-requests-oauthlib
 steam
 wine
 winetricks
