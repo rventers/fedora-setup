@@ -47,7 +47,6 @@ while [ "$CHOICE -ne 4" ]; do
             ;;
         2)  echo "Enabling RPM Fusion"
             sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-            sudo dnf upgrade -y --refresh
             sudo dnf groupupdate -y core
             notify-send "RPM Fusion Enabled" --expire-time=10
             ;;
