@@ -58,9 +58,9 @@ while [ "$CHOICE -ne 4" ]; do
             notify-send "RPM Fusion Enabled" --expire-time=10
             ;;
         4)  echo "Installing Plugins"
+            sudo dnf swap -y ffmpeg-free ffmpeg --allowerasing
             sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel
             sudo dnf install -y lame\* --exclude=lame-devel
-            sudo dnf swap -y ffmpeg-free ffmpeg --allowerasing
             sudo dnf group upgrade -y --with-optional Multimedia
             notify-send "Plugins have been installed" --expire-time=10
             ;;
